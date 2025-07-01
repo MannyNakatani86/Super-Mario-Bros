@@ -1,1 +1,1 @@
-super mario bros copy
+Super Mario Bros
