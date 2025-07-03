@@ -12,6 +12,7 @@ import objects.KoopaTroopa;
 import objects.Mario;
 import objects.Pipe;
 import objects.QuestionBlock;
+import objects.Stair;
 
 public class PlayManager {
 	
@@ -27,11 +28,12 @@ public class PlayManager {
 	ArrayList<Block> blocks = new ArrayList<>();
 	ArrayList<QuestionBlock> qBlocks = new ArrayList<>();
 	ArrayList<Ground> ground = new ArrayList<>();
+	ArrayList<Stair> stairs = new ArrayList<>();
 	ArrayList<Goomba> goombas = new ArrayList<>();
 	ArrayList<KoopaTroopa> koopaTroopas = new ArrayList<>();
 	
 	// size
-	private static final double PIPE_W = 32, BLOCK_SIDE = 16, GROUND_H = 32, 
+	private static final double PIPE_W = 32, BLOCK_SIDE = 16, GROUND_H = 32, STAIR_H = 16, 
 			GOOMBA_W = 16, GOOMBA_H = 16, KOOPA_W = 16, KOOPA_H = 24;
 	
 	public PlayManager() {
@@ -64,6 +66,13 @@ public class PlayManager {
 		double[] ground_w = {1104,240,1024,1104};
 		for(int i = 0; i < ground_x.length; i++) {
 			ground.add(new Ground(ground_x[i], 224, ground_w[i], GROUND_H));
+		}
+		
+		double[] stair_x = {2144,2160,2176,2192};
+		double[] stair_y = {208,192,176,160};
+		double[] stair_w = {64,48,32,16};
+		for(int i = 0; i < stair_x.length; i++) {
+			stairs.add(new Stair(stair_x[i], stair_y[i], stair_w[i], STAIR_H));
 		}
 		
 		double[] goomba_x = {384,672,864,888,1296,1328,1552,1576,1840,1864,2000,2024,2072,
@@ -103,6 +112,7 @@ public class PlayManager {
 		all.addAll(blocks);
 		all.addAll(qBlocks);
 		all.addAll(ground);
+		all.addAll(stairs);
 		all.addAll(goombas);
 		all.addAll(koopaTroopas);
 		all.addAll(ground);
@@ -222,6 +232,7 @@ public class PlayManager {
 		for(Block b : blocks) {b.update(mario.getX(), mario.getScreenX());}
 		for(QuestionBlock q : qBlocks) {q.update(mario.getX(), mario.getScreenX());}
 		for(Ground g : ground) {g.update(mario.getX(), mario.getScreenX());}
+		for(Stair s : stairs) {s.update(mario.getX(), mario.getScreenX());}
 		for(Goomba g : goombas) {g.update(mario.getX(), mario.getScreenX());}
 		for(KoopaTroopa k : koopaTroopas) {k.update(mario.getX(), mario.getScreenX());}
 		background.update(mario.getX(), mario.getScreenX());
@@ -234,6 +245,7 @@ public class PlayManager {
 		background.draw(g2);
 		for(Pipe p : pipes) {p.draw(g2);}
 		for(Ground g : ground) {g.draw(g2);}
+		for(Stair s : stairs) {s.draw(g2);}
 		for(Block b : blocks) {b.draw(g2);}
 		for(QuestionBlock q : qBlocks) {q.draw(g2);}
 		for(Goomba g : goombas) {g.draw(g2);}
