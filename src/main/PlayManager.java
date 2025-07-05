@@ -144,13 +144,12 @@ public class PlayManager {
 			if(isOverlapping(mario, e)) {
 				if(isCollidingFromBottom(mario, e)) {
 					mario.manageUp(e.getY() + e.getHeight());
-					// manage when hitting block
+					checkAndDeleteBlock(e); // check if its true
 					e.setGotHit(true);
 				}else if(isCollidingFromTop(mario, e)) {
 					if(e instanceof Goomba || e instanceof KoopaTroopa) {
 						mario.manageLandingOnEnemy(e.getY());
-						e.setDead(true);
-						score += 100;
+						checkAndDeleteEnemy(e); // check if its true
 					}else {
 						mario.manageLanding(e.getY());
 					}
@@ -216,6 +215,25 @@ public class PlayManager {
 		}
 		if(inAir) {
 			enemy.setIsOnFeet(false);
+		}
+	}
+	
+	private void checkAndDeleteBlock(Entity e) {
+		if(e instanceof Block) {
+			blocks.remove(e);
+		}
+	}
+	
+	private void checkAndDeleteEnemy(Entity e) {
+		if(e instanceof Goomba) {
+			goombas.remove(e);
+		}else if(e instanceof KoopaTroopa) {
+			if(((KoopaTroopa) e).getLevel() == 2) {
+				((KoopaTroopa) e).setLevel(1);
+			}else {
+				koopaTroopas.remove(e);
+			}
+
 		}
 	}
 	

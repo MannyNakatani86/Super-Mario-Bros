@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
 import main.GamePanel;
+import main.KeyHandler;
 
 public class Mario{
 	private static final int SCALE = GamePanel.SCALE;

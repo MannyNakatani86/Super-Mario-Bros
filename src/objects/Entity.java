@@ -10,11 +10,12 @@ import main.GamePanel;
 
 public class Entity {
 	private static final double SCALE = GamePanel.SCALE;
-	// position and size
+	// Position and size
 	private double world_x, y, width, height, screen_x;
-	// physics
+	// Physics
 	private double velocityY = 0*SCALE;
 	private static final double MAX_FALL_SPEED = 6*SCALE, GRAVITY = 1.5*SCALE;
+	// Other
 	private boolean isOnFeet=true, movingRight=false, 
 			movingLeft=true, dead=false, gotHit=false, visible=true;
 	
