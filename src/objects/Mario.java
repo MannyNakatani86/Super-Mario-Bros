@@ -10,7 +10,7 @@ import main.KeyHandler;
 public class Mario{
 	private static final int SCALE = GamePanel.SCALE;
 	// Size and Position
-	private static final double WIDTH = 16*SCALE, HEIGHT = 16*SCALE, HEIGHT_BIG = 32*SCALE;
+	private static final double WIDTH = 13*SCALE, HEIGHT = 13*SCALE, HEIGHT_BIG = 26*SCALE;
 	private double x = 40*SCALE, y = 208*SCALE, screen_x = 40*SCALE;
 	// Physics
 	private double velocityY = 0*SCALE, velocityX = 0*SCALE;
@@ -125,7 +125,7 @@ public class Mario{
 	
 	public void manageLandingOnEnemy(double y) {
 		this.y = y - getHeight();
-		velocityY = -6 * SCALE;
+		velocityY = -8 * SCALE;
 	}
 	
 	public void manageRight(double x) {

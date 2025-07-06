@@ -11,6 +11,7 @@ import objects.Ground;
 import objects.KoopaTroopa;
 import objects.Mario;
 import objects.Pipe;
+import objects.Pole;
 import objects.QuestionBlock;
 import objects.Stair;
 
@@ -24,6 +25,7 @@ public class PlayManager {
 	// Objects
 	Mario mario;
 	Background background;
+	Pole pole;
 	ArrayList<Pipe> pipes = new ArrayList<>();
 	ArrayList<Block> blocks = new ArrayList<>();
 	ArrayList<QuestionBlock> qBlocks = new ArrayList<>();
@@ -39,6 +41,7 @@ public class PlayManager {
 	public PlayManager() {
 		mario = new Mario();
 		background = new Background(0,0,3584, 256);
+		pole = new Pole(3152, 60, 4, 164);
 		
 		double[] pipe_x = {448,608,736,912,2608,2864};
 		double[] pipe_y = {188,171,153,153,188,188};
@@ -68,9 +71,12 @@ public class PlayManager {
 			ground.add(new Ground(ground_x[i], 224, ground_w[i], GROUND_H));
 		}
 		
-		double[] stair_x = {2144,2160,2176,2192};
-		double[] stair_y = {208,192,176,160};
-		double[] stair_w = {64,48,32,16};
+		double[] stair_x = {2144,2160,2176,2192,2240,2240,2240,2240,2368,2384,2400,
+				2416,2480,2480,2480,2480,2896,2912,2928,2944,2960,2976,2992,3008};
+		double[] stair_y = {208,192,176,160,208,192,176,160,208,192,176,160,208,192,176,160,
+				208,192,176,160,144,128,112,96};
+		double[] stair_w = {64,48,32,16,64,48,32,16,80,64,48,32,64,48,32,16,144,128,112,
+				96,80,64,48,32};
 		for(int i = 0; i < stair_x.length; i++) {
 			stairs.add(new Stair(stair_x[i], stair_y[i], stair_w[i], STAIR_H));
 		}
@@ -106,6 +112,10 @@ public class PlayManager {
 		
 	}
 	
+	private void gameComplete() {
+		
+	}
+	
 	private ArrayList<Entity> getAllEntity(){
 		ArrayList<Entity> all = new ArrayList<>();
 		all.addAll(pipes);
@@ -116,6 +126,7 @@ public class PlayManager {
 		all.addAll(goombas);
 		all.addAll(koopaTroopas);
 		all.addAll(ground);
+		all.add(pole);
 		return all;
 	}
 	
@@ -157,6 +168,8 @@ public class PlayManager {
 				}else if(isCollidingFromLeft(mario, e)) {
 					if(e instanceof Goomba || e instanceof KoopaTroopa) {
 						mario.takeDamage();
+					}else if(e instanceof Pole) {
+						gameComplete();
 					}else {
 						mario.manageRight(e.getX());
 					}
@@ -246,6 +259,7 @@ public class PlayManager {
 		handleInput();
 		mario.update();
 		mario.setUpCollision(false);
+		pole.update(mario.getX(), mario.getScreenX());
 		for(Pipe p : pipes) {p.update(mario.getX(), mario.getScreenX());}
 		for(Block b : blocks) {b.update(mario.getX(), mario.getScreenX());}
 		for(QuestionBlock q : qBlocks) {q.update(mario.getX(), mario.getScreenX());}
@@ -261,6 +275,7 @@ public class PlayManager {
 	
 	public void draw(Graphics2D g2) {
 		background.draw(g2);
+		pole.draw(g2);
 		for(Pipe p : pipes) {p.draw(g2);}
 		for(Ground g : ground) {g.draw(g2);}
 		for(Stair s : stairs) {s.draw(g2);}
